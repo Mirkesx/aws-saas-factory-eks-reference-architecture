@@ -192,6 +192,11 @@ Outputs:
     Value: !GetAtt ECRRepos.Outputs.OrderServiceRepo
     Export:
       Name: !Sub '${AWS::StackName}-OrderECR'
+  ArtifactECR:
+    Description: The ECR where the Artifact Service container should be updated
+    Value: !GetAtt ECRRepos.Outputs.ArtifactServiceRepo
+    Export:
+      Name: !Sub '${AWS::StackName}-ArtifactECR'
   CodeCommitCloneUrl:
     Description: The URL to git clone the Code Commit repo
     Value: !GetAtt TenantOnboarding.Outputs.CodeCommitCloneUrl
