@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artifact
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artifact
+  template:
+    metadata:
+      labels:
+        app: artifact
+    spec:
+      containers:
+        - name: artifact
+          image: ARTIFACT_SERVICE_ECR_REPO_URI:latest
+          ports:
+            - containerPort: 5001
+              name: "http"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: artifact-service
+spec:
+  selector:
+    app: artifact
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5001
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: artifact-service-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: api.CUSTOM_DOMAIN
+      http:
+        paths:
+          - path: /TENANT_NAME/artifact
+            backend:
+              service:
+                name: artifact-service
+                port:
+                  number: 80
+            pathType: Prefix

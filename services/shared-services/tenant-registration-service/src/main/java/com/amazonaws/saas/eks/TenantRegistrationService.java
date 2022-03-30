@@ -136,6 +136,7 @@ public class TenantRegistrationService {
 		LoggingManager.logInfo(tenant.getTenantId(), "S3 URL =>" + saaSProviderMetadata.getS3Endpoint());
 		LoggingManager.logInfo(tenant.getTenantId(), "ProductServiceEcrRepoUri =>" + saaSProviderMetadata.getProductServiceEcrRepoUri());
 		LoggingManager.logInfo(tenant.getTenantId(), "OrderServiceEcrRepoUri =>" + saaSProviderMetadata.getOrderServiceEcrRepoUri());
+		LoggingManager.logInfo(tenant.getTenantId(), "ArtifactServiceEcrRepoUri =>" + saaSProviderMetadata.getArtifactServiceEcrRepoUri());
 
 		AmazonCloudFormation client = AmazonCloudFormationClientBuilder.defaultClient();
 
@@ -164,7 +165,12 @@ public class TenantRegistrationService {
 		orderServiceEcrRepoUriParam.setParameterValue(saaSProviderMetadata.getOrderServiceEcrRepoUri());
 		parameters.add(orderServiceEcrRepoUriParam);
 
-		createRequest.setParameters(parameters);
+		Parameter artifactServiceEcrRepoUriParam = new Parameter();
+		artifactServiceEcrRepoUriParam.setParameterKey("ArtifactServiceEcrRepoUri");
+		artifactServiceEcrRepoUriParam.setParameterValue(saaSProviderMetadata.getArtifactServiceEcrRepoUri());
+		parameters.add(artifactServiceEcrRepoUriParam);
+
+		createRequest.setParameters(parameters); //all of these parameters are passed as input while creating the stack
 
 		List<String> capabilities = new ArrayList<String>();
 		capabilities.add("CAPABILITY_IAM");
@@ -191,6 +197,7 @@ public class TenantRegistrationService {
 			metadata.setS3Endpoint((String) item.get("S3_ENDPOINT"));
 			metadata.setProductServiceEcrRepoUri((String) item.get("PRODUCT_SERVICE_ECR"));
 			metadata.setOrderServiceEcrRepoUri((String) item.get("ORDER_SERVICE_ECR"));
+			metadata.setArtifactServiceEcrRepoUri((String) item.get("ARTIFACT_SERVICE_ECR"));
 			
 			logger.info("Printing item! ");
 			logger.info(item.toJSONPretty());

@@ -23,6 +23,7 @@ public class SaaSProviderMetadata implements Serializable {
 	private String s3Endpoint;
 	private String orderServiceEcrRepoUri;
 	private String productServiceEcrRepoUri;
+	private String artifactServiceEcrRepoUri;
 	private String providerUserPool;
 
 	public String getS3Endpoint() {
@@ -47,6 +48,14 @@ public class SaaSProviderMetadata implements Serializable {
 
 	public void setProductServiceEcrRepoUri(String productServiceEcrRepoUri) {
 		this.productServiceEcrRepoUri = productServiceEcrRepoUri;
+	}
+
+	public String getArtifactServiceEcrRepoUri() {
+		return productServiceEcrRepoUri;
+	}
+
+	public void setArtifactServiceEcrRepoUri(String artifactServiceEcrRepoUri) {
+		this.artifactServiceEcrRepoUri = artifactServiceEcrRepoUri;
 	}
 
 	public String getProviderUserPool() {

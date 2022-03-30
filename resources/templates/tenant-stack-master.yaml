@@ -19,6 +19,9 @@ Parameters:
   OrderServiceEcrRepoUri:
     Type: String
     Description: Order Service Ecr Repository Uri
+  ArtifactServiceEcrRepoUri:
+    Type: String
+    Description: Artifact Service Ecr Repository Uri
   BranchName:
     Description: CodeCommit branch name
     Type: String
@@ -211,6 +214,8 @@ Resources:
             Value: !Ref ProductServiceEcrRepoUri
           - Name: ORDER_SERVICE_ECR_REPO_URI
             Value: !Ref OrderServiceEcrRepoUri
+          - Name: ARTIFACT_SERVICE_ECR_REPO_URI
+            Value: !Ref ArtifactServiceEcrRepoUri
       Name: !Ref AWS::StackName
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       VpcConfig:
